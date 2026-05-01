@@ -75,7 +75,7 @@ def generate_frames():
                 if eye_state == "CLOSED":
                     score = max(0, score - 30)
                     state = "DROWSY"
-                elif face_dist_ratio > 0.35:
+                elif face_dist_ratio > 0.20:
                     score = max(0, score - 20)
                     state = "TOO CLOSE"
             else:

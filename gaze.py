@@ -98,7 +98,8 @@ def get_face_distance_ratio(face_landmarks):
     Returns the ratio relative to the frame width (since landmark.x is normalized 0-1).
     A high ratio means the user is leaning very close to the screen.
     """
-    left_corner = face_landmarks.landmark[LEFT_EYE_CORNERS[0]]
-    right_corner = face_landmarks.landmark[RIGHT_EYE_CORNERS[0]]
+    # Use outer eye corners for maximum width
+    left_corner = face_landmarks.landmark[263]
+    right_corner = face_landmarks.landmark[33]
     distance_ratio = abs(left_corner.x - right_corner.x)
     return distance_ratio

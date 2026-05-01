@@ -87,7 +87,7 @@ while True:
             if eye_state == "CLOSED":
                 score = max(0, score - 30)
                 state = "DROWSY"
-            elif face_dist_ratio > 0.35: # If eyes take up > 35% of frame width
+            elif face_dist_ratio > 0.20: # If eyes take up > 20% of frame width
                 score = max(0, score - 20)
                 state = "TOO CLOSE"
         else:
