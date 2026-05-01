@@ -1,0 +1,23 @@
+# Environments
+venv/
+env/
+.env
+
+# Python caching
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs and databases
+logs/
+*.csv
+*.log
+*.sqlite3
+
+# ML Model Weights (Too large for GitHub)
+*.pt
+*.onnx
+
+# OS generated files
+.DS_Store
+Thumbs.db

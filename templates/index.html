@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attention Tracker Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h1>ATTENTION</h1>
+            <h1 class="accent">TRACKER</h1>
+        </div>
+
+        <div class="controls">
+            <button id="btn-start" onclick="controlSession('start')">▶ Start Session</button>
+            <button id="btn-pause" onclick="controlSession('pause')">⏸ Pause Session</button>
+            <button id="btn-stop" onclick="stopServer()"
+                style="background: var(--danger); border-color: var(--danger);">🛑 Stop Tracker (Exit)</button>
+
+            <div class="timer-input-group">
+                <label>Set Timer:</label>
+                <div class="time-boxes">
+                    <input type="number" id="timer-hrs" min="0" max="10" placeholder="Hr"><span>:</span>
+                    <input type="number" id="timer-mins" min="0" max="59" placeholder="Min"><span>:</span>
+                    <input type="number" id="timer-secs" min="0" max="59" placeholder="Sec">
+                </div>
+                <button class="small-btn" onclick="setTimer()">Set</button>
+            </div>
+        </div>
+
+        <div class="nav">
+            <button class="nav-btn active" onclick="showTab('live')">Live Dashboard</button>
+            <button class="nav-btn" onclick="showTab('insights'); fetchInsights();">Insights</button>
+        </div>
+
+        <div class="status-panel">
+            <h3>App State</h3>
+            <div id="app-state-badge" class="badge">START_SCREEN</div>
+            <h3 class="mt">Session Time</h3>
+            <div id="session-time">00:00</div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- Live Dashboard Tab -->
+        <div id="tab-live" class="tab-content active">
+            <div class="top-row">
+                <div class="video-container glass">
+                    <img id="video-feed" src="/video_feed" alt="Webcam Feed">
+                </div>
+
+                <div class="metrics-container">
+                    <div class="score-card glass">
+                        <h2>Attention Score</h2>
+                        <div class="circle-wrap">
+                            <svg class="progress-ring" width="120" height="120">
+                                <circle class="progress-ring__circle" stroke="#00e676" stroke-width="8"
+                                    fill="transparent" r="52" cx="60" cy="60" />
+                            </svg>
+                            <div class="score-text">
+                                <span id="score-val">0</span>
+                            </div>
+                        </div>
+                        <h3 id="state-val" class="state-label">NO FACE</h3>
+                    </div>
+
+                    <div class="stats-grid glass">
+                        <div class="stat"><span>Head</span><strong id="head-val">-</strong></div>
+                        <div class="stat"><span>Gaze</span><strong id="gaze-val">-</strong></div>
+                        <div class="stat"><span>Eyes</span><strong id="eyes-val">-</strong></div>
+                        <div class="stat"><span>Distractions</span><strong id="dist-val">0</strong></div>
+                        <div class="stat"><span>Avg Score</span><strong id="avg-val">0</strong></div>
+                        <div class="stat"><span>Streaks</span><strong id="streak-val" class="accent">None</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container glass mt">
+                <h2>Live Focus Trends</h2>
+                <canvas id="focusChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Insights Tab -->
+        <div id="tab-insights" class="tab-content">
+            <div class="glass full-h">
+                <h2>Historical Focus Insights</h2>
+
+                <div id="insights-global" class="global-stats-container">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="insights-grid" id="insights-grid">
+                    <!-- Cards will be populated by JS -->
+                    <p>Loading insights...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Graph Modal -->
+    <div id="chart-modal" class="modal">
+        <div class="modal-content glass">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title">Session Details</h2>
+            <div class="modal-chart-container">
+                <canvas id="modal-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+
+</html>
