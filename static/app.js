@@ -105,7 +105,12 @@ function updateDashboard() {
                 // AI Voice Alert Logic
                 if (metrics.alert_active) {
                     if (!audioPlayed) {
-                        const msg = new SpeechSynthesisUtterance("Attention! Please focus on your screen.");
+                        let alertText = "Attention! Please focus on your screen.";
+                        if (metrics.state === "PHONE DETECTED") alertText = "Mobile phone detected. Please put it away.";
+                        else if (metrics.state === "DROWSY") alertText = "You seem drowsy. Please take a short break.";
+                        else if (metrics.state === "TOO CLOSE") alertText = "You are sitting too close. Please protect your eyes.";
+                        
+                        const msg = new SpeechSynthesisUtterance(alertText);
                         msg.rate = 1.1;
                         window.speechSynthesis.speak(msg);
                         audioPlayed = true;

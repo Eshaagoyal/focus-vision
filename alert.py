@@ -29,7 +29,7 @@ class AlertSystem:
         """
         now = time.time()
 
-        if state in ("DISTRACTED", "NOT FOCUSED", "NO FACE"):
+        if state != "ATTENTIVE":
             if self.distracted_since is None:
                 self.distracted_since = now
             elif now - self.distracted_since >= self.threshold:
